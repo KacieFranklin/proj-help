@@ -1,6 +1,6 @@
-// Name: 
-// Login: 
-// Date: 
+// Name: Kacie Franklin
+// Login: C00299407@setu.ie
+// Date: 16/03/2024
 // Approximate time taken: 
 //---------------------------------------------------------------------------
 // Project description: TEMPLATE
@@ -112,11 +112,21 @@ void Game::update()
 // This function takes the keyboard input and updates the game world
 {
 	// get keyboard input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
+		myPlayer.moveUp();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
+		myPlayer.moveDown();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		myPlayer.moveRight();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		myPlayer.moveLeft();
 	}
 
 	// update any game variables here ...
@@ -130,7 +140,8 @@ void Game::draw()
 	window.clear();
 
 	m_message.setString("Game Play");
-	window.draw(m_message);  // write message to the screen
+	window.draw(m_message); // write message to the screen
+	window.draw(myPlayer.getBody());
 
 	window.display();
 }

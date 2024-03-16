@@ -20,6 +20,7 @@ class Game
 	sf::RenderWindow window;
 
 public:
+	Player myPlayer;
 	sf::Font m_font;  // font for writing text
 	sf::Text m_message;  // text to write on the screen
 
