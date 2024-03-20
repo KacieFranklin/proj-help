@@ -8,6 +8,7 @@
 
 #include "Globals.h"   // include Global header file
 #include "Player.h"   // include Player header file
+#include "Crawler.h"
 
 
 class Game
@@ -20,7 +21,8 @@ class Game
 	sf::RenderWindow window;
 
 public:
-	Player myPlayer;
+	Player myPlayer; //object of Player
+	Crawler crawler; //object of Crawler
 	sf::Font m_font;  // font for writing text
 	sf::Text m_message;  // text to write on the screen
 

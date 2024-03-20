@@ -128,6 +128,7 @@ void Game::update()
 	{
 		myPlayer.moveLeft();
 	}
+	crawler.move(myPlayer);
 
 	// update any game variables here ...
 
@@ -142,6 +143,7 @@ void Game::draw()
 	m_message.setString("Game Play");
 	window.draw(m_message); // write message to the screen
 	window.draw(myPlayer.getBody());
+	window.draw(crawler.getBody());
 
 	window.display();
 }

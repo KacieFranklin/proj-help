@@ -10,7 +10,8 @@ Player::Player()
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, 100, 120));
 	sprite.setColor(sf::Color::Blue);
-	sprite.setPosition(50, 50);
+	setPosition();
+
 
 	speed = 3;
 	health = 6;
@@ -19,6 +20,21 @@ Player::Player()
 sf::Sprite Player::getBody()
 {
 	return sprite;
+}
+
+void Player::setPosition()
+{
+	sprite.setPosition(50, 50);
+}
+
+void Player::setPosition(int posX, int posY)
+{
+	sprite.setPosition(posX, posY);
+}
+
+sf::Vector2f Player::getPosition()
+{
+	return location;
 }
 
 void Player::moveUp()
