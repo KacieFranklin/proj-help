@@ -62,6 +62,13 @@ void Game::loadContent()
 	m_message.setFillColor(sf::Color::White); // set the text colour
 	m_message.setPosition(10, 10);  // its position on the screen
 
+	if (!m_bgTexture.loadFromFile("ASSETS\\IMAGES\\floor.png"))//load texture
+	{
+		std::cout << "problem loading floor.png";
+	}
+	m_bgSprite.setTexture(m_bgTexture);
+	m_bgSprite.setTextureRect(sf::IntRect(0, 0, 800, 600));
+	m_bgSprite.setScale(1.9, 1.3);
 }
 
 
@@ -141,9 +148,11 @@ void Game::draw()
 	window.clear();
 
 	m_message.setString("Game Play");
-	window.draw(m_message); // write message to the screen
+	window.draw(m_bgSprite);
+	window.draw(m_message); // write message to the screen	;
 	window.draw(myPlayer.getBody());
 	window.draw(crawler.getBody());
+	
 
 	window.display();
 }

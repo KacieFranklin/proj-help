@@ -25,6 +25,8 @@ public:
 	Crawler crawler; //object of Crawler
 	sf::Font m_font;  // font for writing text
 	sf::Text m_message;  // text to write on the screen
+	sf::Sprite m_bgSprite; //sprite for the background
+	sf::Texture m_bgTexture; //texture for background
 
 public:	  // declaration of member functions	
 	Game(); // default constructor
