@@ -17,5 +17,7 @@ public:
 	Player player;
 	Crawler();
 	sf::Sprite getBody();
+	void setPosition();
+	void setPosition(int posX, int posY);
 	void move(Player player);
 };

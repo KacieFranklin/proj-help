@@ -32,10 +32,13 @@
 
 
 #include "Game.h"   // include Game header file
+#include <ctime>
+#include <cstdlib>
 
 
 int main()
-{
+{	
+	srand(time(nullptr));//Only run once 
 	Game aGame;
 	aGame.loadContent();
 	aGame.run();
@@ -51,6 +54,7 @@ Game::Game() : window(sf::VideoMode(static_cast<int>(SCREEN_WIDTH), static_cast<
 void Game::loadContent()
 // Load the font file & setup the message string
 {
+	setUpCrawlers();
 	if (!m_font.loadFromFile("ASSETS/FONTS/BebasNeue.otf"))
 	{
 		std::cout << "error with font file file";
@@ -68,7 +72,7 @@ void Game::loadContent()
 	}
 	m_bgSprite.setTexture(m_bgTexture);
 	m_bgSprite.setTextureRect(sf::IntRect(0, 0, 800, 600));
-	m_bgSprite.setScale(1.9, 1.3);
+	m_bgSprite.setScale(1.9, 1.34);
 }
 
 
@@ -105,6 +109,7 @@ void Game::run()
 		//only when the time since last update is greater than 1/60 update the world.
 		if (timeSinceLastUpdate > timePerFrame)
 		{
+			
 			update();
 			draw();
 
@@ -135,7 +140,11 @@ void Game::update()
 	{
 		myPlayer.moveLeft();
 	}
-	crawler.move(myPlayer);
+	for (int i = 0; i < MAX_CRAWLERS; i++)
+	{
+		crawlers[i].move(myPlayer);
+	}
+	
 
 	// update any game variables here ...
 
@@ -151,8 +160,23 @@ void Game::draw()
 	window.draw(m_bgSprite);
 	window.draw(m_message); // write message to the screen	;
 	window.draw(myPlayer.getBody());
-	window.draw(crawler.getBody());
-	
-
+	for (int i = 0; i < MAX_CRAWLERS; i++)
+	{
+		window.draw(crawlers[i].getBody());
+	}
 	window.display();
+}
+
+/// <summary>
+/// set up Crawlers in a random position
+/// </summary>
+void Game::setUpCrawlers()
+{
+	for (int i = 0; i < MAX_CRAWLERS; i++)
+	{
+		sf::Vector2f randLocation;
+		randLocation.x = (rand() % 1509) + 1;
+		randLocation.y = (rand() % 809) + 1;
+		crawlers[i].setPosition(randLocation.x, randLocation.y);
+	}
 }

@@ -12,3 +12,4 @@ const float SCREEN_WIDTH = 1500;   // the size of the screen in pixels used in t
 const float SCREEN_HEIGHT = 800;
 const int IMAGE_WIDTH = 100;
 const int IMAGE_HEIGHT = 120;
+const int MAX_CRAWLERS = 4;

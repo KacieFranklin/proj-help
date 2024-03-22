@@ -16,6 +16,7 @@ Player::Player()
 	}
 	sprite.setTexture(texture);
 	sprite.setScale(1.8, 1.8);
+	//sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	//sprite.setTextureRect(sf::IntRect(0, 0, 100, 120));
 	//sprite.setColor(sf::Color::Blue);
 	setPosition();
@@ -67,6 +68,7 @@ void Player::moveUp()
 	if (location.y <= 0)//boundry checking
 	{
 		sprite.setPosition(location.x, 0);
+		direction = NORTH;
 		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_up.png"))//loads texture
@@ -87,6 +89,7 @@ void Player::moveDown()
 	if (location.y + IMAGE_HEIGHT >= SCREEN_HEIGHT)//boundry checking
 	{
 		sprite.setPosition(location.x, SCREEN_HEIGHT - IMAGE_HEIGHT);
+		direction = SOUTH;
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_down.png"))//loads texture
 	{
@@ -106,6 +109,7 @@ void Player::moveRight()
 	if (location.x + IMAGE_WIDTH >= SCREEN_WIDTH)//boundry checking
 	{
 		sprite.setPosition(SCREEN_WIDTH - IMAGE_WIDTH, location.y);
+		direction = EAST;
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_right.png"))//loads textre
 	{
@@ -126,6 +130,7 @@ void Player::moveLeft()
 	if (location.x <= 0)//boundary checking
 	{
 		sprite.setPosition(0,location.y);
+		direction = WEST;
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_left.png"))//loads texture
 	{

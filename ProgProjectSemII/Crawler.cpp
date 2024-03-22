@@ -7,14 +7,15 @@
 /// </summary>
 Crawler::Crawler()
 {
-	if (!texture.loadFromFile("ASSETS\\IMAGES\\enemy2_down.png"))
+	if (!texture.loadFromFile("ASSETS\\IMAGES\\enemy2_down.png"))//load texture
 	{
 		std::cout << "problem loading enemy2_down.png";
 	}
 	sprite.setTexture(texture);
 	sprite.setScale(3.0, 3.0);
+	//sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	//sprite.setTextureRect(sf::IntRect(0, 0, 120, 120));
-	sprite.setPosition(100, 100);
+	
 	//sprite.setColor(sf::Color::Red);
 
 	health = 3;//sets Crawler's health
@@ -75,4 +76,17 @@ void Crawler::move(Player player)
 		}
 		sprite.setTexture(texture);
 	}
+}
+
+/// <summary>
+/// sets the position of the Crawler
+/// </summary>
+void Crawler::setPosition()
+{
+	sprite.setPosition(100, 100);
+}
+
+void Crawler::setPosition(int posX, int posY)
+{
+	sprite.setPosition(posX, posY);
 }

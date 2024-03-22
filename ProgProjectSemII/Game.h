@@ -22,7 +22,7 @@ class Game
 
 public:
 	Player myPlayer; //object of Player
-	Crawler crawler; //object of Crawler
+	Crawler crawlers[MAX_CRAWLERS]; //object of Crawler
 	sf::Font m_font;  // font for writing text
 	sf::Text m_message;  // text to write on the screen
 	sf::Sprite m_bgSprite; //sprite for the background
@@ -34,4 +34,5 @@ public:	  // declaration of member functions
 	void	run();
 	void	update();
 	void	draw();
+	void	setUpCrawlers();
 };

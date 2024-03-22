@@ -9,6 +9,7 @@ class Player
 	int speed;//player's speed
 	int health;//player's health
 	sf::Vector2f location;
+	int direction;
 	
 
 public:
