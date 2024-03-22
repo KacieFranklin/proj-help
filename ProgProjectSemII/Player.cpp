@@ -35,6 +35,11 @@ sf::Sprite Player::getBody()
 	return sprite;
 }
 
+sf::Sprite Player::getBullet()
+{
+	return bullet;
+}
+
 /// <summary>
 /// Sets the position of the player
 /// </summary>
@@ -66,9 +71,10 @@ void Player::moveUp()
 	location.y--;
 	sprite.setPosition(location.x, location.y - speed);
 	if (location.y <= 0)//boundry checking
-	{
-		sprite.setPosition(location.x, 0);
+	{	
 		direction = NORTH;
+		sprite.setPosition(location.x, 0);
+		
 		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_up.png"))//loads texture
@@ -87,9 +93,10 @@ void Player::moveDown()
 	location.y++;
 	sprite.setPosition(location.x, location.y + speed);
 	if (location.y + IMAGE_HEIGHT >= SCREEN_HEIGHT)//boundry checking
-	{
-		sprite.setPosition(location.x, SCREEN_HEIGHT - IMAGE_HEIGHT);
+	{	
 		direction = SOUTH;
+		sprite.setPosition(location.x, SCREEN_HEIGHT - IMAGE_HEIGHT);
+		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_down.png"))//loads texture
 	{
@@ -107,15 +114,69 @@ void Player::moveRight()
 	location.x++;
 	sprite.setPosition(location.x + speed, location.y);
 	if (location.x + IMAGE_WIDTH >= SCREEN_WIDTH)//boundry checking
-	{
-		sprite.setPosition(SCREEN_WIDTH - IMAGE_WIDTH, location.y);
+	{	
 		direction = EAST;
+		sprite.setPosition(SCREEN_WIDTH - IMAGE_WIDTH, location.y);
+		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_right.png"))//loads textre
 	{
 		std::cout << "problem loading player_right.png";
 	}
 	sprite.setTexture(texture);
+}
+
+/// <summary>
+/// player fires their weapon
+/// </summary>
+void Player::shoot()
+{
+	float angle;
+	//bullet.setTextureRect(sf::IntRect(0, 0, 64, 64));
+	bulletLocation = sf::Vector2f{ sprite.getPosition().x, sprite.getPosition().y };
+	//bullet.setScale(2.0, 2.0);
+	bullet.setPosition(bulletLocation);
+	angle = std::atan2(bulletVelocity.y, bulletVelocity.x);
+	angle = angle * 180.0f / 3.14f;
+	bullet.setRotation(angle + 90.0f);
+	bulletVelocity += gravity;
+	bulletLocation += bulletVelocity;
+	
+	if (direction == NORTH)
+	{
+		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_up.png"))
+		{
+			std::cout << "problem loading fireball_up.png";
+		}
+		bullet.setTexture(bulletTexture);
+	}
+	if (direction == SOUTH)
+	{
+		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_down.png"))
+		{
+			std::cout << "problem loading fireball_down.png";
+		}
+		bullet.setTexture(bulletTexture);
+	}
+	if (direction == EAST)
+	{
+		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_right.png"))
+		{
+			std::cout << "problem loading fireball_right.png";
+		}
+		bullet.setTexture(bulletTexture);
+	}
+	if (direction == WEST)
+	{
+		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_left.png"))
+		{
+			std::cout << "problem loading fireball_left.png";
+		}
+		bullet.setTexture(bulletTexture);
+	}
+	bullet.setPosition(bulletLocation);
+
+	
 }
 
 /// <summary>
@@ -128,9 +189,10 @@ void Player::moveLeft()
 	location.x--;
 	sprite.setPosition(location.x - speed, location.y);
 	if (location.x <= 0)//boundary checking
-	{
-		sprite.setPosition(0,location.y);
+	{	
 		direction = WEST;
+		sprite.setPosition(0,location.y);
+		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_left.png"))//loads texture
 	{

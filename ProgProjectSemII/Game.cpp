@@ -140,6 +140,12 @@ void Game::update()
 	{
 		myPlayer.moveLeft();
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{	
+		
+		myPlayer.shoot();
+		
+	}
 	for (int i = 0; i < MAX_CRAWLERS; i++)
 	{
 		crawlers[i].move(myPlayer);
@@ -164,6 +170,8 @@ void Game::draw()
 	{
 		window.draw(crawlers[i].getBody());
 	}
+	window.draw(myPlayer.getBullet());
+	
 	window.display();
 }
 
