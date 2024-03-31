@@ -43,7 +43,7 @@ int main()
 	aGame.loadContent();
 	aGame.run();
 
-	return 0;
+return 0;
 }
 
 Game::Game() : window(sf::VideoMode(static_cast<int>(SCREEN_WIDTH), static_cast<int>(SCREEN_HEIGHT)), "Joint Project Game", sf::Style::Default)
@@ -54,6 +54,7 @@ Game::Game() : window(sf::VideoMode(static_cast<int>(SCREEN_WIDTH), static_cast<
 void Game::loadContent()
 // Load the font file & setup the message string
 {
+	eyeTwo.setPosition(900, 50);
 	setUpCrawlers();
 	if (!m_font.loadFromFile("ASSETS/FONTS/BebasNeue.otf"))
 	{
@@ -109,7 +110,7 @@ void Game::run()
 		//only when the time since last update is greater than 1/60 update the world.
 		if (timeSinceLastUpdate > timePerFrame)
 		{
-			
+			processEvents();
 			update();
 			draw();
 
@@ -118,6 +119,27 @@ void Game::run()
 		}
 	}  // end while loop
 
+}
+
+void Game::processEvents()
+{
+	sf::Event newEvent;
+
+	while (window.pollEvent(newEvent))
+	{
+		if (sf::Event::MouseButtonPressed == newEvent.type)
+		{
+			processMouseDown(newEvent);
+		}
+		if (sf::Event::MouseButtonReleased == newEvent.type)
+		{
+			processMouseUp(newEvent);
+		}
+	}
+}
+
+void Game::processKeys(sf::Event t_event)
+{
 }
 
 void Game::update()
@@ -141,19 +163,37 @@ void Game::update()
 		myPlayer.moveLeft();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	{	
-		
+	{
 		myPlayer.shoot();
-		
 	}
 	for (int i = 0; i < MAX_CRAWLERS; i++)
 	{
 		crawlers[i].move(myPlayer);
 	}
+
+	eye.coolDown();
+	eyeTwo.coolDown();
 	
 
 	// update any game variables here ...
 
+}
+
+void Game::processMouseDown(sf::Event t_event)
+{
+	clicked = true;
+	m_mouseEnd.x = static_cast<float>(t_event.mouseButton.x);
+	m_mouseEnd.y = static_cast<float>(t_event.mouseButton.y);
+}
+
+void Game::processMouseUp(sf::Event t_event)
+{
+	clicked = false;
+	if (clicked == false)
+	{
+		myPlayer.shoot();
+	}
+	
 }
 
 void Game::draw()
@@ -171,6 +211,9 @@ void Game::draw()
 		window.draw(crawlers[i].getBody());
 	}
 	window.draw(myPlayer.getBullet());
+	
+	window.draw(eye.getBody());
+	window.draw(eyeTwo.getBody());
 	
 	window.display();
 }

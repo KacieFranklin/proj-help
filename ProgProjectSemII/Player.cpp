@@ -131,17 +131,29 @@ void Player::moveRight()
 /// </summary>
 void Player::shoot()
 {
-	float angle;
-	//bullet.setTextureRect(sf::IntRect(0, 0, 64, 64));
-	bulletLocation = sf::Vector2f{ sprite.getPosition().x, sprite.getPosition().y };
-	//bullet.setScale(2.0, 2.0);
-	bullet.setPosition(bulletLocation);
-	angle = std::atan2(bulletVelocity.y, bulletVelocity.x);
-	angle = angle * 180.0f / 3.14f;
-	bullet.setRotation(angle + 90.0f);
-	bulletVelocity += gravity;
-	bulletLocation += bulletVelocity;
-	
+	//checkDirection();
+	//std::cout << "" << direction;
+
+	//if (direction == NORTH)
+	//{
+		bulletLocation.x--;
+		bullet.setPosition(bulletLocation.x, bulletLocation.y);
+	//}
+		//if (direction == NORTH)
+		//{
+			if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_up.png"))
+			{
+				std::cout << "problem loading fireball_up.png";
+			}
+			bullet.setTexture(bulletTexture);
+		//}
+
+		
+
+}
+
+void Player::checkDirection()
+{
 	if (direction == NORTH)
 	{
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_up.png"))
@@ -150,6 +162,7 @@ void Player::shoot()
 		}
 		bullet.setTexture(bulletTexture);
 	}
+
 	if (direction == SOUTH)
 	{
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_down.png"))
@@ -175,8 +188,6 @@ void Player::shoot()
 		bullet.setTexture(bulletTexture);
 	}
 	bullet.setPosition(bulletLocation);
-
-	
 }
 
 /// <summary>
