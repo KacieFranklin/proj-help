@@ -12,9 +12,10 @@ class Player
 	int health;//player's health
 	sf::Vector2f location;
 	sf::Vector2f bulletVelocity{ 2.0f,2.0f };
-	sf::Vector2f bulletLocation { sprite.getPosition().x, sprite.getPosition().y };
+	sf::Vector2f bulletLocation { 0.f, 0.f };
 	int direction;
-	bool firing = false;
+	int fireDirection;
+	
 
 	
 
@@ -31,6 +32,6 @@ public:
 	void moveRight();
 	void shoot();
 	void checkDirection();
-
+	bool firing = false;
 
 };

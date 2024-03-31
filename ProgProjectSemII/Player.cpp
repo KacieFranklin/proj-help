@@ -20,7 +20,7 @@ Player::Player()
 	//sprite.setTextureRect(sf::IntRect(0, 0, 100, 120));
 	//sprite.setColor(sf::Color::Blue);
 	setPosition();
-
+	bulletLocation = location;
 
 	speed = 3;//sets speed
 	health = 6;//sets health
@@ -70,12 +70,11 @@ void Player::moveUp()
 	location = sprite.getPosition();
 	location.y--;
 	sprite.setPosition(location.x, location.y - speed);
+	direction = NORTH;
 	if (location.y <= 0)//boundry checking
 	{	
-		direction = NORTH;
+		
 		sprite.setPosition(location.x, 0);
-		
-		
 	}
 	if (!texture.loadFromFile("ASSETS\\IMAGES\\player_up.png"))//loads texture
 	{
@@ -131,31 +130,28 @@ void Player::moveRight()
 /// </summary>
 void Player::shoot()
 {
-	//checkDirection();
+	if (!firing)
+	{
+		bulletLocation = location;
+		bullet.setPosition(bulletLocation);
+		firing = true;
+		checkDirection();
+	}
 	//std::cout << "" << direction;
-
-	//if (direction == NORTH)
-	//{
-		bulletLocation.x--;
-		bullet.setPosition(bulletLocation.x, bulletLocation.y);
-	//}
-		//if (direction == NORTH)
-		//{
-			if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_up.png"))
-			{
-				std::cout << "problem loading fireball_up.png";
-			}
-			bullet.setTexture(bulletTexture);
-		//}
-
-		
-
+	else {
+		if (fireDirection == NORTH)
+		{
+			bulletLocation.y--;
+			bullet.setPosition(bulletLocation);
+		}
+	}
 }
 
 void Player::checkDirection()
 {
 	if (direction == NORTH)
 	{
+		fireDirection = NORTH;
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_up.png"))
 		{
 			std::cout << "problem loading fireball_up.png";
@@ -165,6 +161,7 @@ void Player::checkDirection()
 
 	if (direction == SOUTH)
 	{
+		fireDirection = SOUTH;
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_down.png"))
 		{
 			std::cout << "problem loading fireball_down.png";
@@ -173,6 +170,7 @@ void Player::checkDirection()
 	}
 	if (direction == EAST)
 	{
+		fireDirection = EAST;
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_right.png"))
 		{
 			std::cout << "problem loading fireball_right.png";
@@ -181,13 +179,13 @@ void Player::checkDirection()
 	}
 	if (direction == WEST)
 	{
+		fireDirection = WEST;
 		if (!bulletTexture.loadFromFile("ASSETS\\IMAGES\\fireball_left.png"))
 		{
 			std::cout << "problem loading fireball_left.png";
 		}
 		bullet.setTexture(bulletTexture);
 	}
-	bullet.setPosition(bulletLocation);
 }
 
 /// <summary>

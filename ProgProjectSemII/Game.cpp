@@ -166,9 +166,18 @@ void Game::update()
 	{
 		myPlayer.shoot();
 	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		myPlayer.shoot();
+	}
 	for (int i = 0; i < MAX_CRAWLERS; i++)
 	{
 		crawlers[i].move(myPlayer);
+	}
+
+	if (myPlayer.firing == true)
+	{
+		myPlayer.shoot();
 	}
 
 	eye.coolDown();
@@ -181,19 +190,10 @@ void Game::update()
 
 void Game::processMouseDown(sf::Event t_event)
 {
-	clicked = true;
-	m_mouseEnd.x = static_cast<float>(t_event.mouseButton.x);
-	m_mouseEnd.y = static_cast<float>(t_event.mouseButton.y);
 }
 
 void Game::processMouseUp(sf::Event t_event)
 {
-	clicked = false;
-	if (clicked == false)
-	{
-		myPlayer.shoot();
-	}
-	
 }
 
 void Game::draw()
@@ -210,8 +210,10 @@ void Game::draw()
 	{
 		window.draw(crawlers[i].getBody());
 	}
-	window.draw(myPlayer.getBullet());
-	
+	if (myPlayer.firing == true)
+	{
+		window.draw(myPlayer.getBullet());
+	}
 	window.draw(eye.getBody());
 	window.draw(eyeTwo.getBody());
 	
